@@ -1,6 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from blogs.models import Category, Blog
 from assignments.models import About
+from .forms import RegistrationForm
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib import auth
 
 
 def home(request):
@@ -20,3 +23,19 @@ def home(request):
     }
     
     return render(request, 'home.html', context)
+
+
+def register(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('register')
+        else:
+            print(form.errors)
+    else:
+        form = RegistrationForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'register.html', context)
