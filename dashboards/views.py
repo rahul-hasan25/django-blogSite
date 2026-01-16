@@ -148,6 +148,6 @@ def edit_user(request, pk):
 
 
 def delete_user(request, pk):
-    user = get_object_or_404(User, pk=pk)
+    user = get_object_or_404(User,pk=pk)
     user.delete()
     return redirect('users')
